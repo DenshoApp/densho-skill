@@ -18,7 +18,8 @@ instance renders, and the skill tells the assistant to call it before writing.
 One source of truth, versioned with the instance, so this repository can never
 drift from what the editor actually understands.
 
-Scope is the editor: spaces, pages and comments. Kanban boards are out.
+Scope is the editor: spaces, pages, their organisation and comments. Kanban
+boards and chat are out.
 
 ## Requirements
 
