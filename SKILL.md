@@ -128,8 +128,15 @@ the section is about, short paragraphs, and lists where the content is a list.
 Everything the editor supports round-trips through Markdown, so what you write
 is what the person sees, and what they later export. The round trip normalises
 as it goes: `$$maths$$` comes back on three lines, blocks gain blank lines
-between them. Reading back something shaped slightly differently from what you
-sent is normal and not a sign that anything failed.
+between them, a hard line break comes back as a backslash at the end of the
+line. Reading back something shaped slightly differently from what you sent is
+normal and not a sign that anything failed.
+
+One normalisation is a loss, not a reshaping: **a single newline inside a
+paragraph is not kept**, the lines are joined. A metadata header written as
+`Version: 1.2` over `Language: English` comes back as one line. When lines must
+stay apart, make them a list or a table, or use the line break the reference
+gives.
 
 ## What will not work
 
@@ -172,6 +179,14 @@ sent is normal and not a sign that anything failed.
   permissions. `get_public_link` tells you which case you are in. Look at
   `list_pages` before moving something, and trash a page only when the user
   asked for that page.
+- **A space can be synced with a git repository**, where every page is a
+  Markdown file and every folder page a directory. There, `move_page`, a new
+  title, `trash_page` and `restore_page` move, rename or remove files, and the
+  commit goes out under the user's own git signature for the team to pull.
+  Treat a reorganisation there like a change to code: say which pages will
+  move before doing it, and do not rename a page back and forth to try
+  things out. The user usually knows whether their space is synced; ask when
+  a large reorganisation is on the table and you cannot tell.
 - **Restoring a version is an edit like any other**: it shows up live for
   whoever has the page open and resets a verified page. Read the version with
   `get_page_version` and say what it drops before putting it back.
