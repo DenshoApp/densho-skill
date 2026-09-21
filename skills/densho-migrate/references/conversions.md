@@ -165,6 +165,7 @@ so copy the file into the folder and point at the copy.
 | `![[Other note]]` (embedding a whole note) | a link to it; copy the text only if the user wants it duplicated |
 | `<video src>`, `<audio src>` | `[Video](file.mp4)`, `[Audio](file.mp3)` on a line of their own |
 | a PDF | `[PDF](file.pdf)` on its own line shows a viewer; inside a sentence it is a link |
+| one page of a PDF | `[PDF](file.pdf#page=3)` on its own line shows that page alone (1-based) |
 | `<iframe src="https://www.youtube.com/embed/...">` | `[YouTube](https://www.youtube.com/embed/...)` on its own line, keeping the embed URL; `[Vimeo](...)` the same |
 | Hugo `{{< figure src="a.png" caption="..." >}}` | the image, then the caption in italics on the next paragraph |
 
@@ -300,7 +301,8 @@ The block between `---` lines at the top of a file.
   `:::toggle Title`, `:::subpages`, `:::pagebreak`, columns as `::::columns`
   wrapping one `:::column` per column.
 - Images `![alt|width=500 align=left](src)`; `[Video](src)`, `[Audio](src)`,
-  `[PDF](src)`, `[YouTube](url)` on their own line become players.
+  `[PDF](src)`, `[YouTube](url)` on their own line become players;
+  `[PDF](src#page=3)` shows that one page of the document.
 - `<!-- comments -->` are kept, hidden.
 - Chips (`[@Name](mention:id)`, `[label](page:id)`, `[text](status:color)`)
   need ids from a Densho instance: a migration writes relative `.md` links
