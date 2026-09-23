@@ -213,8 +213,9 @@ class Checker:
                     outer = next((c for c in reversed(containers) if c[1] not in ESCALATING), None)
                     if outer and kind not in ESCALATING and outer[0] <= colons:
                         self.add("breaks", "nested-container", path, n,
-                                 f":::{kind} inside :::{outer[1]}: its closing ::: closes the "
-                                 "outer block too, now or on Densho's next write; move it out")
+                                 f":::{kind} inside :::{outer[1]}: its closing fence closes the "
+                                 "outer block too; write the outer one with more colons "
+                                 f"(::::{outer[1]}) or move this block out")
                     containers.append((colons, kind))
                 elif containers:
                     containers.pop()
