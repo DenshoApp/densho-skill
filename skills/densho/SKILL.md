@@ -157,10 +157,12 @@ gives.
   a Markdown image pointing at a local path or a file you claim to have added.
   An image already in the page keeps working: leave its link untouched when you
   rewrite the body.
-- **Never invent chip identifiers.** Mentions, page links and synced blocks
-  encode real ids (`[@Name](mention:<userId>)`, `[label](page:<pageId>)`,
-  `![[synced-blocks/...]]`). A made up id renders as a dead chip. Use a real id
-  you obtained from a tool, or write a plain link.
+- **Never invent chip identifiers.** Mentions, profile cards, page links,
+  links to a file of another page and synced blocks encode real ids
+  (`[@Name](mention:<userId>)`, `[@Name](profile:<userId>)`,
+  `[label](page:<pageId>)`, `[file](element:<pageId>/<attachmentId>)`,
+  `![[synced-blocks/...]]`). A made up id renders as a dead chip. Use a real
+  id you obtained from a tool, or write a plain link.
 
 ## Things that have consequences for the team
 
