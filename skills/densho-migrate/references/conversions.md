@@ -66,13 +66,14 @@ opening line.
 | Obsidian `> [!faq]- Why` (the `-` or `+` makes it foldable) | `:::toggle Why` |
 | VitePress `::: details Why` | `:::toggle Why` (`:::details Why` also works) |
 
-**Do not put a callout inside a toggle** (or a toggle inside a toggle).
-Every `:::` fence closes the block opened by the shortest fence, so the
-callout's closing `:::` closes the toggle. Writing the outer one as
-`::::toggle` imports correctly, but Densho writes it back as `:::toggle` and
-the next round trip breaks it. Put the callout before or after the toggle,
-or make its content a bold line and a paragraph inside the toggle. Columns
-are the exception: Densho lengthens their fences itself.
+**A callout inside a toggle** (or a toggle inside a toggle) needs a longer
+fence on the outer block. Every `:::` fence closes the block opened by the
+shortest fence, so with two `:::` fences the callout's closing `:::` closes
+the toggle too. Write `::::toggle Why` ... `::::` around the callout's
+`:::info` ... `:::`: Densho keeps the longer fence when it writes the page
+back, as it does for columns and flashcards. Instances from before that
+change write `:::toggle` back and break the nesting on the next round trip:
+there, put the callout before or after the toggle instead.
 
 ## 3. Line breaks and metadata headers
 
