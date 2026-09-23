@@ -41,7 +41,11 @@ RESERVED_DIRS = {".git", ".trash", "assets", "synced-blocks"}
 SKIPPED_DIRS = {".git", "node_modules", ".obsidian", ".vitepress", ".docusaurus"}
 # Callout types the ::: family renders.
 CALLOUTS = {"info", "note", "success", "warning", "danger"}
-OTHER_CONTAINERS = {"custom", "toggle", "details", "columns", "column", "pagebreak", "subpages"}
+OTHER_CONTAINERS = {"custom", "toggle", "details", "columns", "column", "pagebreak", "subpages",
+                    "flashcard", "front", "back"}
+# Blocks Densho writes back with a longer fence than anything inside them,
+# so what they hold may use a fence of any length.
+ESCALATING = {"columns", "column", "flashcard", "front", "back"}
 # Characters Densho replaces in a page title when it names the file back.
 UNSAFE_NAME = re.compile(r'[\\/:*?"<>|]')
 MAX_NAME = 80
@@ -206,8 +210,8 @@ class Checker:
             if fenceline and fenceline.group(2).lower() not in {"pagebreak", "subpages"}:
                 colons, kind = len(fenceline.group(1)), fenceline.group(2).lower()
                 if kind:
-                    outer = next((c for c in reversed(containers) if c[1] not in {"columns", "column"}), None)
-                    if outer and kind not in {"columns", "column"} and outer[0] <= colons:
+                    outer = next((c for c in reversed(containers) if c[1] not in ESCALATING), None)
+                    if outer and kind not in ESCALATING and outer[0] <= colons:
                         self.add("breaks", "nested-container", path, n,
                                  f":::{kind} inside :::{outer[1]}: its closing ::: closes the "
                                  "outer block too, now or on Densho's next write; move it out")

@@ -299,11 +299,19 @@ The block between `---` lines at the top of a file.
 - `$inline$` and `$$block$$` math.
 - Callouts `:::info|note|success|warning|danger` and `:::custom 🔥`,
   `:::toggle Title`, `:::subpages`, `:::pagebreak`, columns as `::::columns`
-  wrapping one `:::column` per column.
-- Images `![alt|width=500 align=left](src)`; `[Video](src)`, `[Audio](src)`,
-  `[PDF](src)`, `[YouTube](url)` on their own line become players;
-  `[PDF](src#page=3)` shows that one page of the document.
+  wrapping one `:::column` per column, flashcards as `::::flashcard`
+  wrapping `:::front` then `:::back` (a question and its answer, turned over
+  by the reader).
+- Images `![alt|width=500 height=300 align=left](src)`; `[Video](src)`,
+  `[Audio](src)`, `[PDF](src)`, `[YouTube](url)` on their own line become
+  players; `[PDF](src#page=3)` shows that one page of the document. Those
+  links take the same size and alignment after a pipe,
+  `[Video|width=480 align=center](src)`, and `::::flashcard` and
+  `:::subpages` take them on their opening line; the audio player takes a
+  width only.
 - `<!-- comments -->` are kept, hidden.
-- Chips (`[@Name](mention:id)`, `[label](page:id)`, `[text](status:color)`)
-  need ids from a Densho instance: a migration writes relative `.md` links
-  instead, which the import turns into page links.
+- Chips (`[@Name](mention:id)`, `[@Name](profile:id)` for a profile card on
+  its own line, `[label](page:id)`, `[file](element:pageId/attachmentId)`
+  for a file of another page, `[text](status:color)`) need ids from a
+  Densho instance: a migration writes relative `.md` links instead, which
+  the import turns into page links.
