@@ -2,11 +2,12 @@
 """Lists what in a folder of Markdown will not survive Densho as it is.
 
 Densho reads a folder as a tree of pages (a folder is a page whose text is
-its readme.md, X.md is a page titled X) and rewrites every file it takes in
-into its own dialect. Whatever that dialect cannot read is escaped, merged
-or dropped, and with the git sync the damage is committed back to the
-repository on the first cycle. Run this before importing or connecting, fix
-what it reports, and run it again until nothing blocking is left.
+its readme.md, X.md is a page titled X) and reads every file it takes in
+with its own dialect. Whatever that dialect cannot read is escaped, merged
+or dropped in the page, and with the git sync the damage is committed back
+to the repository as soon as the page is edited in Densho. Run this before
+importing or connecting, fix what it reports, and run it again until nothing
+blocking is left.
 
 Three levels:
   breaks    the content or the tree comes out wrong (escaped callouts,

@@ -5,15 +5,17 @@ description: Convert an existing documentation set (a docs/ folder, a wiki or a 
 
 # Migrating documentation to Densho
 
-Densho reads a folder of Markdown as a tree of pages and rewrites every file
-it takes in into its own dialect. What the dialect cannot read is not
-rejected: it is escaped, merged or dropped, silently. With the git sync that
-damaged version is also **committed back to the repository on the first
-cycle**, under the team's eyes, and every later cycle builds on it.
+Densho reads a folder of Markdown as a tree of pages and reads every file
+in its own dialect. What the dialect cannot read is not rejected: it is
+escaped, merged or dropped, silently, and the page holds that damaged
+version. The git sync leaves the file itself as written (it only adds the
+page id), but **the first edit of the page in Densho writes the file back in
+Densho's form, damage included**, under the team's eyes, and every later
+edit builds on it.
 
 So the whole job is to convert first, commit once, and only then import or
-connect. A migration done after connecting is a repair of what the sync
-already rewrote.
+connect. A migration done after connecting is a repair of what the pages
+already hold.
 
 ## 1. Find out where the docs are going
 

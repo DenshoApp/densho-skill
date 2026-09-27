@@ -34,12 +34,14 @@ boards and chat are out.
 
 ## densho-migrate
 
-Densho rewrites every file it takes in into its own dialect. What it cannot
+Densho reads every file it takes in with its own dialect. What it cannot
 read (a GitHub `> [!NOTE]`, a MkDocs admonition, a wiki link, a metadata
 header written as separate lines, a folder spelled two ways) is escaped,
-merged or duplicated rather than refused, and with the git sync that result
-is committed back to the repository on the first cycle. This skill converts
-first, on a branch, so the first commit Densho pushes only adds page ids.
+merged or duplicated rather than refused: the page shows the damage at once,
+and with the git sync it reaches the repository the first time someone edits
+that page in Densho, which writes the file back in its own form. This skill
+converts first, on a branch, so the pages come out right and the first
+commit Densho pushes only adds page ids.
 
 It works on files, before Densho ever sees them, and needs no Densho
 connection. Unlike `densho`, it carries the syntax itself, since there is no
