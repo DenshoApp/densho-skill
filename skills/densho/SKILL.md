@@ -75,7 +75,11 @@ whether the user follows it), `list_comments` (threads and their resolution
 state), `list_labels` (the workspace's labels with how many pages carry each),
 `get_page_history` and `get_page_version` (the saved versions of a page, and
 one of them as Markdown), `get_public_link` (whether a page is published and
-its public URL), `list_trash` (what a space's trash holds).
+its public URL), `list_trash` (what a space's trash holds), `read_file` (the
+text of a PDF or a text file attached to a page, given its id or the
+`/files/<id>/...` link of the page's Markdown; a long PDF comes back cut after
+a whole page with the range to ask for next in `pages`, and a scanned PDF has
+no text to read; older instances do not have it).
 
 **Writing the page.** `create_page` (in a space, optionally under a parent,
 with an icon and a body), `update_page` (title, icon, review status and/or the
