@@ -43,7 +43,9 @@ SKIPPED_DIRS = {".git", "node_modules", ".obsidian", ".vitepress", ".docusaurus"
 # Callout types the ::: family renders.
 CALLOUTS = {"info", "note", "success", "warning", "danger"}
 OTHER_CONTAINERS = {"custom", "toggle", "details", "columns", "column", "pagebreak", "subpages",
-                    "flashcard", "front", "back"}
+                    "kanban", "flashcard", "front", "back"}
+# Blocks written on one line, with no closing fence.
+SINGLE_LINE = {"pagebreak", "subpages", "kanban"}
 # Blocks Densho writes back with a longer fence than anything inside them,
 # so what they hold may use a fence of any length.
 ESCALATING = {"columns", "column", "flashcard", "front", "back"}
@@ -208,7 +210,7 @@ class Checker:
                 self.add("cosmetic", "indented-code", path, n, "becomes a ``` fence")
             prev_blank = False
             fenceline = re.match(r"^(:{3,})\s*([\w-]*)", stripped)
-            if fenceline and fenceline.group(2).lower() not in {"pagebreak", "subpages"}:
+            if fenceline and fenceline.group(2).lower() not in SINGLE_LINE:
                 colons, kind = len(fenceline.group(1)), fenceline.group(2).lower()
                 if kind:
                     outer = next((c for c in reversed(containers) if c[1] not in ESCALATING), None)

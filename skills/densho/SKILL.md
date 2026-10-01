@@ -165,11 +165,17 @@ gives.
   An image already in the page keeps working: leave its link untouched when you
   rewrite the body.
 - **Never invent chip identifiers.** Mentions, profile cards, page links,
-  links to a file of another page and synced blocks encode real ids
-  (`[@Name](mention:<userId>)`, `[@Name](profile:<userId>)`,
+  links to a file of another page, synced blocks and Kanban blocks encode
+  real ids (`[@Name](mention:<userId>)`, `[@Name](profile:<userId>)`,
   `[label](page:<pageId>)`, `[file](element:<pageId>/<attachmentId>)`,
-  `![[synced-blocks/...]]`). A made up id renders as a dead chip. Use a real
-  id you obtained from a tool, or write a plain link.
+  `![[synced-blocks/...]]`, `:::kanban board <boardId>`). A made up id
+  renders as a dead chip. Use a real id you obtained from a tool, or write a
+  plain link.
+- **Keep the `:::kanban` lines of a page as they came.** Each is a Kanban
+  block (a board, its cards, one card, its progress, or the cards linked to
+  the page) and no tool lists boards, so you cannot write a new one: when you
+  rewrite a page, leave those lines where they are, or the blocks are
+  deleted.
 
 ## Things that have consequences for the team
 
