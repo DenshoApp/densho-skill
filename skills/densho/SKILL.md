@@ -89,10 +89,10 @@ current one goes into the history, so it can be undone the same way).
 **Labelling and reviewing.** `add_page_labels` and `remove_page_label` work by
 name. A label belongs to a space, and a few workspace labels, made in the
 workspace settings, are offered in every space: call `list_labels` with the
-page's `spaceId` first and reuse the spelling you find, because a name that
-does not exist yet is only created by the space's admins (it then becomes a
-label of that space), and a near duplicate ("how-to" next to "howto") is
-worse than no label. Older instances keep one list for the whole workspace
+page's `spaceId` first and reuse the spelling you find: a name that does not
+exist yet becomes a new label of that space for anyone who can edit the
+page, and a near duplicate ("how-to" next to "howto") is worse than no
+label. Older instances keep one list for the whole workspace
 and take no `spaceId`. The review status goes `DRAFT`, `IN_PROGRESS`,
 `READY_TO_VERIFY`, `VERIFIED`; you may move a page along the first three, but
 setting `VERIFIED`, or touching a verified page's status, is refused unless the
