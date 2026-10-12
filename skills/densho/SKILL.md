@@ -168,7 +168,7 @@ gives.
   links to a file of another page, synced blocks and Kanban blocks encode
   real ids (`[@Name](mention:<userId>)`, `[@Name](profile:<userId>)`,
   `[label](page:<pageId>)`, `[file](element:<pageId>/<attachmentId>)`,
-  `![[synced-blocks/...]]`, `:::kanban board <boardId>`). A made up id
+  `![[synced-block:<blockId>]]`, `:::kanban board <boardId>`). A made up id
   renders as a dead chip. Use a real id you obtained from a tool, or write a
   plain link.
 - **Keep the `:::kanban` lines of a page as they came.** Each is a Kanban
@@ -176,6 +176,13 @@ gives.
   the page) and no tool lists boards, so you cannot write a new one: when you
   rewrite a page, leave those lines where they are, or the blocks are
   deleted.
+- **Keep the `![[synced-block:<blockId>]]` lines as they came.** Each, on a
+  line of its own, is a synced block: content shared by several pages of the
+  space and edited in the editor. Rewrite the page around it and leave the line
+  as it is; no tool creates a block. Repeating the line of an existing block
+  shows it on another page of the same space. Inside a code block or a
+  sentence it is plain text. In the files of a git synced space the same block
+  reads `![[synced-blocks/<file>.md]]`, the path of the file holding it.
 
 ## Things that have consequences for the team
 
