@@ -54,6 +54,11 @@ UNSAFE_NAME = re.compile(r'[\\/:*?"<>|]')
 MAX_NAME = 80
 # Inline HTML the escaper will show as text. Comments are fine.
 HTML_TAG = re.compile(r"</?([A-Za-z][\w-]*)(?:\s[^<>]*)?/?>")
+# <mark> is read as a highlight, bare or with the single attribute data-color
+# naming one of the eight colours (anything else keeps the tag as text).
+MARK_OK = re.compile(
+    r'</mark>|<mark(?:\s+data-color="(?:yellow|orange|red|pink|purple|blue|green|gray)")?\s*>'
+)
 LINK = re.compile(r"(!?)\[([^\]]*)\]\(\s*<?([^()\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 
 
@@ -352,6 +357,8 @@ class Checker:
         tags_here: set[str] = set()
         for tag in HTML_TAG.finditer(prose):
             name = tag.group(1)
+            if name.lower() == "mark" and MARK_OK.fullmatch(tag.group(0)):
+                continue
             if name.lower() in {"details", "summary"} or name.lower() in tags_here:
                 continue
             tags_here.add(name.lower())

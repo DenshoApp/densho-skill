@@ -185,7 +185,7 @@ hidden, which suits linter directives). Use the Markdown form:
 | `<code>` | `` `x` `` |
 | `<kbd>Ctrl</kbd>+<kbd>C</kbd>` | `` `Ctrl+C` `` |
 | `<sub>` / `<sup>` | `~x~` / `^x^` |
-| `<mark>` | `==x==` |
+| `<mark>` | `==x==` (yellow); a coloured highlight becomes `<mark data-color="green">x</mark>`, the nearest of `orange`, `red`, `pink`, `purple`, `blue`, `green`, `gray`, and yellow when the source has no colour |
 | `<u>`, `<ins>` | `++x++` |
 | `<s>`, `<del>` | `~~x~~` |
 | `<a href="...">` | `[text](...)` (and section 5 for internal targets) |
@@ -291,8 +291,9 @@ The block between `---` lines at the top of a file.
 
 ## 13. The Densho dialect at a glance
 
-- Headings `#` to `###`; bold, italic, `~~strike~~`, `==highlight==`,
-  `++underline++`, `~sub~`, `^sup^`; bold, italic and links may cover
+- Headings `#` to `###`; bold, italic, `~~strike~~`, `==highlight==` (yellow;
+  another colour is `<mark data-color="green">x</mark>`, one of `orange`, `red`,
+  `pink`, `purple`, `blue`, `green`, `gray`), `++underline++`, `~sub~`, `^sup^`; bold, italic and links may cover
   `` `code` ``.
 - A hard line break is a backslash at the end of the line.
 - GFM tables, task lists `- [ ]`, quotes, `---` dividers, fenced code with a
