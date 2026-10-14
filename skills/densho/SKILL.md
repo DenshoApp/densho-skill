@@ -154,6 +154,10 @@ gives.
   block self contained unless the user tells you their workspace allows more.
   A block never sends a `Referer`, so services that require one (OpenStreetMap
   tiles, keys restricted to a website) refuse it whatever the setting.
+  The one exception is the coloured highlight, `<mark data-color="green">text</mark>`
+  (orange, red, pink, purple, blue, green or gray; `==text==` stays the yellow
+  one): it is read back as a highlight, but only with that single attribute, a
+  `<mark>` carrying a `style` stays text. `get_markdown_reference` has the rest.
 - **GitHub callouts** (`> [!NOTE]`) are not part of the dialect: the brackets are
   escaped and the reader sees `\[!NOTE\]` inside a plain quote. Use a callout.
 - **Footnotes** are worse than useless here. `text[^1]` with its `[^1]: note`
