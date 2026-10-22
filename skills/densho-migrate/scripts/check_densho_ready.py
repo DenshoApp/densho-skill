@@ -59,6 +59,11 @@ HTML_TAG = re.compile(r"</?([A-Za-z][\w-]*)(?:\s[^<>]*)?/?>")
 MARK_OK = re.compile(
     r'</mark>|<mark(?:\s+data-color="(?:yellow|orange|red|pink|purple|blue|green|gray)")?\s*>'
 )
+# <br> is read as a line break inside a table cell (a row is one line), and
+# only there; a backslash before it (`\<br>`) keeps it as text, and is fine.
+CELL_BREAK = re.compile(r"<br\s*/?>", re.I)
+# A link or an image, its label allowing escaped brackets (`[ok\] \[x](status:success)`).
+LABELLED = re.compile(r"!?\[(?:\\.|[^\]\\\n])*\]\([^)\n]*\)")
 LINK = re.compile(r"(!?)\[([^\]]*)\]\(\s*<?([^()\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 
 
@@ -349,7 +354,7 @@ class Checker:
         if re.search(r"\{\{[<%]|\{%", prose):
             self.add("breaks", "shortcode", path, n,
                      "a Hugo shortcode or Liquid tag is shown as text: write what it produced")
-        if re.search(r"\\\[|\\\(", prose):
+        if re.search(r"\\\[|\\\(", LABELLED.sub("", prose)):
             self.add("breaks", "latex-delimiters", path, n, r"\[ \] and \( \) are shown as text: use $$ and $")
         if re.match(r"^:\s+\S", s) and i > 0 and lines[i - 1].strip():
             self.add("breaks", "definition-list", path, n,
@@ -360,6 +365,9 @@ class Checker:
             if name.lower() == "mark" and MARK_OK.fullmatch(tag.group(0)):
                 continue
             if name.lower() in {"details", "summary"} or name.lower() in tags_here:
+                continue
+            if name.lower() == "br" and CELL_BREAK.fullmatch(tag.group(0)) and (
+                    s.startswith("|") or prose[max(tag.start() - 1, 0):tag.start()] == "\\"):
                 continue
             tags_here.add(name.lower())
             if name[0].isupper():
