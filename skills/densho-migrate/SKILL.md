@@ -127,7 +127,8 @@ examples per source tool. The ones that matter most:
   `$PATH:$HOME` stays text and needs no escape; a formula's own dollar is
   `\$`, and a formula the plain form cannot carry is written `` $`text`$ ``.
   The checker leaves these forms, and the escapes Densho writes (`\+\+`,
-  `\=\=`, `\~`, `\^`, a leading `\:::`), alone.
+  `\=\=`, `\~`, `\^`, a leading `\:::` spaced or not, `2026\.`, `1\)`, `\+`,
+  `\#`, `\&amp;`, `~i\_j~`, `^\[1\]^`, `<https://e.com/a>\[b`), alone.
 - **Headings stop at level 3.** `####` and deeper become plain text: raise
   them, make them bold lines, or split the page if the depth means it holds
   several pages.

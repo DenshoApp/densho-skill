@@ -211,7 +211,16 @@ text, so move such content out of the table when the structure matters.
 
 Text that merely looks like a mark stays text, escaped with a backslash
 where it would otherwise be read as one: `\+\+`, `\=\=`, `\~`, `\^`, `\$`, and
-`\:::info` or a lone `\:::` for a line that is not a block. A `]` in the
+`\:::info`, `\::: info`, `\::::columns` or a lone `\:::` for a line that is not
+a block. A short line that would read as a block is escaped too (`2026\.`,
+`1\)`, `\+`, `\#`, `\##`, and a heading ending in a hash, `## Issue \#`), and
+an HTML entity written as text is `\&amp;`. The inside of `~sub~` and `^sup^`
+is inline Markdown with escapes (`~i\_j~`, `^\[1\]^`, `\~`, `\^`); a pair that
+would close a bracket it did not open is not a sub or sup. An address followed
+by a character that is escaped is written `<https://e.com/a>\[b`. A table
+always has a header row: one written without it comes back with its first row
+as the header. A code block and a `$$` block are kept as written, blank lines
+at the end included. A `]` in the
 label of a status badge, a mention or an image alt is written `\]` (the
 checker accepts these). Leave such escapes alone when converting.
 
