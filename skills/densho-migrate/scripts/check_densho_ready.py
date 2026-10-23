@@ -64,6 +64,10 @@ MARK_OK = re.compile(
 CELL_BREAK = re.compile(r"<br\s*/?>", re.I)
 # A link or an image, its label allowing escaped brackets (`[ok\] \[x](status:success)`).
 LABELLED = re.compile(r"!?\[(?:\\.|[^\]\\\n])*\]\([^)\n]*\)")
+# A sub/sup span (`~i\_j~`, `^\[1\]^`) and an address followed by an escaped
+# bracket (`<https://e.com/a>\[b`): Densho writes these, they are not LaTeX.
+SUBSUP = re.compile(r"([~^])(?:\\.|[^~^\\\n])+\1")
+AUTOLINK_ESCAPED = re.compile(r"<[A-Za-z][A-Za-z0-9+.-]*:[^>\s]*>\\\[")
 LINK = re.compile(r"(!?)\[([^\]]*)\]\(\s*<?([^()\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 
 
@@ -354,7 +358,8 @@ class Checker:
         if re.search(r"\{\{[<%]|\{%", prose):
             self.add("breaks", "shortcode", path, n,
                      "a Hugo shortcode or Liquid tag is shown as text: write what it produced")
-        if re.search(r"\\\[|\\\(", LABELLED.sub("", prose)):
+        latex = AUTOLINK_ESCAPED.sub("", SUBSUP.sub("", LABELLED.sub("", prose)))
+        if re.search(r"\\\[|\\\(", latex):
             self.add("breaks", "latex-delimiters", path, n, r"\[ \] and \( \) are shown as text: use $$ and $")
         if re.match(r"^:\s+\S", s) and i > 0 and lines[i - 1].strip():
             self.add("breaks", "definition-list", path, n,
@@ -389,7 +394,7 @@ class Checker:
             self.add("cosmetic", "paren-list", path, n, "becomes 1.")
         if re.search(r"(?<![\w*_])_[^_\s][^_]*_(?![\w_])|__[^_]+__", prose):
             self.add("cosmetic", "underscore-emphasis", path, n, "becomes * or **")
-        if re.search(r"<https?://[^>]+>", prose):
+        if re.search(r"<https?://[^>]+>(?!\\)", prose):
             self.add("cosmetic", "autolink", path, n, "becomes [url](url)")
         if re.match(r"^\s*\[[^\]]+\]:\s+\S", raw) or re.search(r"\]\[[^\]]*\]", prose):
             self.add("cosmetic", "reference-link", path, n, "becomes an inline link")
