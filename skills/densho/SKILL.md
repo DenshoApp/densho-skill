@@ -139,6 +139,16 @@ between them, a hard line break comes back as a backslash at the end of the
 line. Reading back something shaped slightly differently from what you sent is
 normal and not a sign that anything failed.
 
+Text that merely looks like syntax stays text, and the export escapes only
+what would otherwise be read as a mark or a block (`\+\+`, `\=\=`, `\~`, `\^`,
+`\$`, a leading `\:::`): leave those backslashes in place when you rewrite a
+page. Dollars follow the same care: `$5-$10` and `$PATH:$HOME` are prose and
+need nothing, `$x^2$` is a formula, and a formula the plain form cannot carry
+is written `` $`text`$ ``. A table row is one line: a line break in a cell is
+`<br>`, a pipe is `\|`, an empty cell is `|  |`, and a list or code block in
+a cell is flattened to text. A toggle title is read as inline Markdown, and
+an empty callout, toggle, quote or code block is kept as it is.
+
 One normalisation is a loss, not a reshaping: **a single newline inside a
 paragraph is not kept**, the lines are joined. A metadata header written as
 `Version: 1.2` over `Language: English` comes back as one line. When lines must

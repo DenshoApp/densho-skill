@@ -57,7 +57,10 @@ becomes a callout holding that sentence.
 ## 2. Collapsible blocks
 
 `:::toggle Title` ... `:::` is a collapsible block; the title stays on the
-opening line.
+opening line and is read as inline Markdown (`:::toggle **Why** it works`
+keeps its bold and its links). A toggle always opens unfolded: whether it
+was folded is never part of the document. An empty toggle (`:::toggle` then
+`:::`), like an empty callout, quote or code block, is kept as it is.
 
 | Source | Densho |
 | --- | --- |
@@ -105,7 +108,8 @@ Lyon, France
 ```
 
 Two trailing spaces also work but are invisible and stripped by many
-editors; Densho rewrites them as the backslash. `<br>` is shown as text.
+editors; Densho rewrites them as the backslash. `<br>` is shown as text,
+except inside a table cell (section 7).
 
 ## 4. Headings
 
@@ -190,11 +194,26 @@ hidden, which suits linter directives). Use the Markdown form:
 | `<s>`, `<del>` | `~~x~~` |
 | `<a href="...">` | `[text](...)` (and section 5 for internal targets) |
 | `<br>` in a paragraph | a backslash at the end of the line |
-| `<br>` in a table cell | a cell holds one line: separate with `;`, or move the content out of the table |
+| `<br>` in a table cell | keep `<br>` (`| one<br>two |`): inside a cell it is read as a line break, and Densho writes it back the same way |
 | `<hr>` | `---` |
 | a simple `<table>` | a GFM table |
 | `<div>`, `<span>`, `<p>`, `<center>` used for layout | drop the tags, keep the text |
 | anything meant to render or run (a widget, a styled card, a form) | a fenced ` ```htmlrender ` block, self-contained: it runs in a sandbox |
+
+### Tables and escapes
+
+A table row is one line, so a cell holds inline content only. In a cell, a
+line break is `<br>`, a pipe is `\|` (inside a code span too), and an empty
+cell is two spaces between its pipes (`|  |`), which keeps the cell on its
+row. A list, heading, quote or code block inside a cell is flattened to its
+text, one line per line joined by `<br>`: the structure is lost, not the
+text, so move such content out of the table when the structure matters.
+
+Text that merely looks like a mark stays text, escaped with a backslash
+where it would otherwise be read as one: `\+\+`, `\=\=`, `\~`, `\^`, `\$`, and
+`\:::info` or a lone `\:::` for a line that is not a block. A `]` in the
+label of a status badge, a mention or an image alt is written `\]` (the
+checker accepts these). Leave such escapes alone when converting.
 
 ## 8. Footnotes, definition lists, abbreviations
 
@@ -212,7 +231,19 @@ hidden, which suits linter directives). Use the Markdown form:
 - Block math is `$$ ... $$` (on its own lines, or `$$x^2$$` on one line).
   A ```` ```math ```` fence shows as code, and `\[ ... \]` as text.
 - Inline math is `$x^2$`, with no space just inside the dollars. `\( ... \)`
-  is shown as text.
+  is shown as text. A `$...$` is a formula only when its text reads as one:
+  no space just inside, it ends with a letter, a digit or one of
+  `) ] } ' ! | *`, a text starting with a digit holds no space, and no digit
+  follows the closing dollar. So `$x$`, `$x^2$`, `$f(x)$` and `$2x+1$` are
+  formulas, while prose such as `$5-$10`, `from $5 to $10` and
+  `$PATH:$HOME` stays text and needs nothing. A dollar sign inside a
+  formula is written `\$`.
+- A formula the plain form cannot carry (its text fails that rule, holds a
+  bare `$`, or is followed by a digit) is written in GitHub's form,
+  ``$`5\%`$``: the text between backticks, always read as a formula (more
+  backticks when the text holds some, one padding space each side when it
+  starts or ends with a space or a backtick). Convert a source's odd inline
+  formula to it rather than to a `$...$` that would be read as text.
 - ```` ```mermaid ```` renders. PlantUML, Graphviz and other diagram fences
   stay code listings: keep them as code, or redraw simple ones in Mermaid
   when the user wants them rendered.
@@ -296,9 +327,12 @@ The block between `---` lines at the top of a file.
   `pink`, `purple`, `blue`, `green`, `gray`), `++underline++`, `~sub~`, `^sup^`; bold, italic and links may cover
   `` `code` ``.
 - A hard line break is a backslash at the end of the line.
-- GFM tables, task lists `- [ ]`, quotes, `---` dividers, fenced code with a
+- GFM tables (a cell holds one line: `<br>` breaks it, `\|` is a pipe, an
+  empty cell is `|  |`), task lists `- [ ]`, quotes, `---` dividers, fenced code with a
   language, ```` ```mermaid ````, ```` ```htmlrender ````.
-- `$inline$` and `$$block$$` math.
+- `$inline$` (only when the text reads as a formula: `$5-$10` is text, a
+  formula's own dollar is `\$`, `` $`text`$ `` is the form that is always a
+  formula) and `$$block$$` math.
 - Callouts `:::info|note|success|warning|danger` and `:::custom 🔥`,
   `:::toggle Title`, `:::subpages`, `:::pagebreak`, a Kanban board of the
   instance as `:::kanban <view> <boardId>` (one line, like `:::subpages`),

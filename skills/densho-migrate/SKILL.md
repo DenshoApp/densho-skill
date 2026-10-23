@@ -112,7 +112,7 @@ examples per source tool. The ones that matter most:
   `:::caution` become `:::note`, `:::success`, `:::warning`, `:::danger` or
   `:::info` blocks. Densho callouts carry no title: put it in bold on the
   first line inside. Collapsible ones (`??? note`, `> [!note]-`) and
-  `<details>` become `:::toggle Title`. Keep callouts and toggles side by
+  `<details>` become `:::toggle Title` (the title is inline Markdown). Keep callouts and toggles side by
   side, never one inside the other: Densho writes both with `:::` fences,
   and the inner closing fence ends the outer block on the next round trip.
 - **Lines that must stay apart.** A single newline inside a paragraph is not
@@ -120,6 +120,14 @@ examples per source tool. The ones that matter most:
   `Language: English`) becomes one line. Make it a list or a table, or end
   each line but the last with a backslash. Prose wrapped at 80 columns is
   fine to leave as it is.
+- **Tables hold one line per row.** Keep `<br>` in a cell for a line break
+  (read only there), write a pipe as `\|` and an empty cell as `|  |`; a list
+  or code block inside a cell is flattened, so move it out of the table.
+- **Dollars.** `$x^2$` is a formula, but prose such as `$5-$10` or
+  `$PATH:$HOME` stays text and needs no escape; a formula's own dollar is
+  `\$`, and a formula the plain form cannot carry is written `` $`text`$ ``.
+  The checker leaves these forms, and the escapes Densho writes (`\+\+`,
+  `\=\=`, `\~`, `\^`, a leading `\:::`), alone.
 - **Headings stop at level 3.** `####` and deeper become plain text: raise
   them, make them bold lines, or split the page if the depth means it holds
   several pages.
