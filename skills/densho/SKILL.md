@@ -1,6 +1,6 @@
 ---
 name: densho
-description: Read, write and organise pages in a Densho workspace through its MCP server. Use when the user asks to look something up in their wiki or documentation, draft or update a page, answer from what the team has written down, leave feedback on a page, or tidy the wiki (labels, icons, review status, moving, duplicating, trashing and restoring pages, page history, public links, subscriptions). Covers pages, spaces, comments and the Densho Markdown dialect.
+description: Read, write and organise pages in a Densho workspace through its MCP server. Use when the user asks to look something up in their wiki or documentation, draft or update a page, answer from what the team has written down, leave feedback on a page, or tidy the wiki (labels, icons, review status, moving, duplicating, trashing and restoring pages, page history, public links, subscriptions, snippets). Covers pages, spaces, comments and the Densho Markdown dialect.
 ---
 
 # Densho
@@ -109,6 +109,18 @@ a page for 30 days and there is no permanent deletion through you).
 `parentCommentId`), `resolve_comment` (resolve or reopen), `subscribe_page` and
 `subscribe_space` (the user's own notifications only: edits of a page, new
 pages in a space).
+
+**Snippets.** Reusable pieces of content a member keeps to insert into pages:
+`list_snippets` (the user's own and the ones shared with the workspace, by
+name, without their content) and `get_snippet` (one of them, its content as
+Markdown); with write access, `create_snippet` and `update_snippet` (name,
+description, Markdown content and whether it is shared). A snippet is private
+to its author until shared; a shared one can be changed by its author and the
+workspace admins, and only its author can share or unshare it. Inserting a
+snippet into a page is an ordinary edit: `get_page`, put the snippet's Markdown
+where it belongs in the body, `update_page`. What lands there is a copy, so a
+later change to the snippet leaves the page alone. Older instances have no
+snippets.
 
 Pages are also exposed as `densho://page/{id}` resources, so a client can attach
 one directly.
