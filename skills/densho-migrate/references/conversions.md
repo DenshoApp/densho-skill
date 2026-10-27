@@ -355,7 +355,9 @@ The block between `---` lines at the top of a file.
   links take the same size and alignment after a pipe,
   `[Video|width=480 align=center](src)`, and `::::flashcard`, `:::subpages`
   and `:::kanban` take them on their opening line; the audio player takes a
-  width only.
+  width only. An image or a video can also be turned and mirrored after its
+  size, `![alt|width=300 rotate=90 flip=horizontal](src)`: `rotate=90|180|270`
+  clockwise, `flip=horizontal|vertical` applied first.
 - `<!-- comments -->` are kept, hidden.
 - Chips (`[@Name](mention:id)`, `[@Name](profile:id)` for a profile card on
   its own line, `[label](page:id)`, `[file](element:pageId/attachmentId)`
